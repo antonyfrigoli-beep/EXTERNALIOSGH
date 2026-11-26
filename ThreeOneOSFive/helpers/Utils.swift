@@ -17,7 +17,7 @@ struct RemoteAppTab: Codable, Identifiable { let id: String; let title: String; 
 struct RemoteAppCategory: Codable, Identifiable { let id: String; let title: String; let icon: String; let color: String; let game: String; let visible: Bool; let order: Int }
 struct RemoteAppConfig: Codable {
     var schemaVersion: Int = 1
-    var appName: String = "X"
+    var appName: String = "EXTERNAL GH777"
     var brandName: String = "EXTERNAL GH777"
     var subtitle: String = "PATCH CONTROL"
     var logoUrl: String?
