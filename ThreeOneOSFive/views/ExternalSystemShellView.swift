@@ -354,13 +354,13 @@ enum DeltaColors {
     static let darkModeKey = "externalSystem.darkMode"
     static let customHueKey = "externalSystem.customHue"
     private static let palette = DeltaPalette(
-        primary: Color(red: 0.72, green: 0.74, blue: 0.76),
-        dark: Color(red: 0.24, green: 0.25, blue: 0.27),
-        page: Color(red: 0.018, green: 0.018, blue: 0.018),
+        primary: Color(red: 0.74, green: 0.44, blue: 1.0),
+        dark: Color(red: 0.28, green: 0.09, blue: 0.42),
+        page: Color(red: 0.055, green: 0.018, blue: 0.095),
         ink: Color.white.opacity(0.96),
-        muted: Color(red: 0.62, green: 0.64, blue: 0.66),
-        card: Color(red: 0.065, green: 0.065, blue: 0.065).opacity(0.98),
-        line: Color.white.opacity(0.13)
+        muted: Color(red: 0.72, green: 0.65, blue: 0.78),
+        card: Color(red: 0.105, green: 0.052, blue: 0.16).opacity(0.98),
+        line: Color(red: 0.96, green: 0.18, blue: 0.30).opacity(0.16)
     )
     static var accent: Color { palette.primary }
     static var purpleDark: Color { palette.dark }

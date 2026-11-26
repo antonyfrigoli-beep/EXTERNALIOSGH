@@ -51,19 +51,19 @@ enum AppTheme {
     static let wallpaperBlurStorageKey = "theme.wallpaper.blur"
     static let animationSpeedStorageKey = "theme.animation.speed"
     static let saturationStorageKey = "theme.saturation"
-    static let defaultAccentPalette = AppAccentPalette.slate.rawValue
+    static let defaultAccentPalette = AppAccentPalette.purple.rawValue
     static let defaultGlassOpacity = 0.14
     static let defaultWallpaperBlur = 26.0
     static let defaultAnimationSpeed = 1.0
     static let defaultSaturation = 1.0
 
-    static var accent: Color { Color(red: 0.70, green: 0.72, blue: 0.74) }
+    static var accent: Color { Color(red: 0.73, green: 0.43, blue: 0.98) }
     static var glassOpacity: Double { UserDefaults.standard.object(forKey: glassOpacityStorageKey) as? Double ?? defaultGlassOpacity }
     static var wallpaperBlur: CGFloat { CGFloat(UserDefaults.standard.object(forKey: wallpaperBlurStorageKey) as? Double ?? defaultWallpaperBlur) }
     static var animationSpeed: Double { UserDefaults.standard.object(forKey: animationSpeedStorageKey) as? Double ?? defaultAnimationSpeed }
     static var saturation: Double { UserDefaults.standard.object(forKey: saturationStorageKey) as? Double ?? defaultSaturation }
-    static let pageBackground = Color.black
-    static let consoleBackground = Color(red: 0.075, green: 0.075, blue: 0.075)
+    static let pageBackground = Color(red: 0.055, green: 0.018, blue: 0.095)
+    static let consoleBackground = Color(red: 0.085, green: 0.035, blue: 0.135)
     static let pageInset: CGFloat = 16
     static let rowIconSize: CGFloat = 17
     static let rowIconFrame: CGFloat = 28
@@ -184,7 +184,7 @@ struct ParticleFieldBackground: View {
         GeometryReader { _ in
             ZStack {
                 LinearGradient(
-                    colors: [Color(red: 0.018, green: 0.018, blue: 0.018), Color(red: 0.032, green: 0.032, blue: 0.032), .black],
+                    colors: [Color(red: 0.085, green: 0.032, blue: 0.15), Color(red: 0.115, green: 0.042, blue: 0.20), Color(red: 0.045, green: 0.014, blue: 0.085)],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 )
@@ -236,14 +236,14 @@ struct ParticleFieldBackground: View {
                 path.move(to: a)
                 path.addLine(to: b)
                 let opacity = Double(0.11 * (1 - distance / maxDistance))
-                context.stroke(path, with: .color(Color(red: 0.62, green: 0.64, blue: 0.66).opacity(opacity)), lineWidth: 0.55)
+                context.stroke(path, with: .color(Color(red: 0.96, green: 0.16, blue: 0.27).opacity(opacity * 0.82)), lineWidth: 0.55)
             }
         }
 
         for (index, point) in points.enumerated() {
             let radius: CGFloat = index.isMultiple(of: 5) ? 2.1 : 1.25
             let dot = Path(ellipseIn: CGRect(x: point.x - radius, y: point.y - radius, width: radius * 2, height: radius * 2))
-            context.fill(dot, with: .color(Color(red: 0.72, green: 0.74, blue: 0.76).opacity(index.isMultiple(of: 4) ? 0.42 : 0.20)))
+            context.fill(dot, with: .color(Color(red: 1.0, green: 0.18, blue: 0.30).opacity(index.isMultiple(of: 4) ? 0.48 : 0.24)))
         }
     }
 }
