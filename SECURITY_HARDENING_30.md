@@ -70,7 +70,7 @@ Há defesas úteis já presentes:
 
 Há pontos que precisam de evolução para proteção real:
 
-- `syncToken` está embutido no cliente e deve deixar de ser segredo;
+- o feed R2 atual não embute o antigo `PATCH_SYNC_TOKEN`; o Worker serve o catálogo em modo somente leitura;
 - o feed entrega `fileUrl`, que deve virar URL assinada e temporária;
 - checksum sozinho não prova autoria; é necessário manifesto e pacote assinados;
 - a autorização ainda não exige App Attest/DeviceCheck;

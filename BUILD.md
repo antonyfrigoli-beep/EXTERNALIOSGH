@@ -1,14 +1,12 @@
 # Build do 3105
 
-Este repositório é uma cópia de trabalho independente do projeto original [YangJiiii/3105](https://github.com/YangJiiii/3105). A configuração de sincronização remota do app foi atualizada para o feed 3105 Remote Patches.
+Este repositório é uma cópia de trabalho independente do projeto original [YangJiiii/3105](https://github.com/YangJiiii/3105). A sincronização de conteúdo remoto do app usa o Worker `gh777-patch-feed`, ligado ao bucket R2 `gh777-patches-prod`.
 
 ## Compilação e sincronização remota
 
-O projeto exige macOS, Xcode e o SDK iOS. O workflow [Build iOS app](.github/workflows/build-ios.yml) compila o target `3105` em `Release` e publica o artefato `x-ios-ipa`, contendo somente `X.ipa`, no run do GitHub Actions por 14 dias. O log bruto do Xcode não é anexado ao artefato.
+O projeto exige macOS, Xcode e o SDK iOS. O workflow [Build iOS app](.github/workflows/build-ios.yml) compila o target `worse_query` em `Release` e publica o artefato `external-gh777-ios-ipa`, contendo `EXTERNAL-GH777.ipa`, no run do GitHub Actions por 14 dias. O log bruto do Xcode não é anexado ao artefato.
 
-Antes do build, configure em **Settings → Secrets and variables → Actions** o segredo de repositório chamado exatamente `PATCH_SYNC_TOKEN`, com o novo token de sincronização do backend. Atalho para a tela: [Actions secrets do repositório](https://github.com/bts2019amo-ctrl/3105-public-build-20260918-copy/settings/secrets/actions). Não use a senha do Gmail/Manus. O workflow escreve o valor somente em um `.xcconfig` temporário no runner e o expande no `Info.plist` da compilação; o token não fica no código-fonte. O workflow falha com uma mensagem clara se o segredo estiver ausente ou for curto demais.
-
-O token é incorporado ao binário iOS porque o cliente precisa autenticar as chamadas ao feed. Como qualquer credencial estática em um app, ele pode ser extraído por engenharia reversa: trate-o como uma credencial de cliente limitada ao feed/heartbeat, não como segredo confidencial perante quem recebe a IPA. A administração continua protegida por OAuth. Rotacionar esse token exige atualizar o secret do GitHub Actions e gerar/distribuir uma nova IPA.
+O app consulta `https://gh777-patch-feed.marcelamartinszx12.workers.dev`, que lê o catálogo do bucket R2 privado `gh777-patches-prod` e disponibiliza o feed e os downloads em modo somente leitura. O app não recebe credenciais de escrita do R2 nem incorpora o antigo `PATCH_SYNC_TOKEN` na IPA. O acesso aos objetos passa pelo Worker; o bucket não é publicado diretamente.
 
 ## Instalação
 

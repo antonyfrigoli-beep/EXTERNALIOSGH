@@ -4,13 +4,9 @@ import UIKit
 import Combine
 
 enum RemotePatchConfiguration {
-    static let baseURL = URL(string: "https://patch3105-ebnmw8rq.manus.space")!
-    static var syncToken: String {
-        (Bundle.main.object(forInfoDictionaryKey: "PatchSyncToken") as? String ?? "")
-            .trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-    static let allowedRemoteFeatures: Set<String> = ["cache", "avatar", "hologram", "skin"]
-    static let pollIntervalNanoseconds: UInt64 = 2_000_000_000
+	static let baseURL = URL(string: "https://gh777-patch-feed.marcelamartinszx12.workers.dev")!
+	static let allowedRemoteFeatures: Set<String> = ["cache", "avatar", "hologram", "skin"]
+	static let pollIntervalNanoseconds: UInt64 = 2_000_000_000
 }
 
 private struct RemoteFeedEnvelope: Decodable {
@@ -171,35 +167,37 @@ final class PatchProjectStore: ObservableObject {
         guard IOSKeySession.runtimeAuthorized, isActivated, !remoteSyncInFlight else { return }
         remoteSyncInFlight = true
         defer { remoteSyncInFlight = false }
-        remoteSyncState = .syncing
-        do {
-            guard !RemotePatchConfiguration.syncToken.isEmpty else {
-                throw NSError(domain: "RemotePatchFeed", code: 401, userInfo: [NSLocalizedDescriptionKey: "Token de sincronização não foi incluído nesta compilação."])
-            }
-            guard let feedURL = URL(string: "api/trpc/patches.feed", relativeTo: RemotePatchConfiguration.baseURL)?.absoluteURL else {
-                throw URLError(.badURL)
-            }
-            let payload: [String: Any] = [
-                "json": [
-                    "syncToken": RemotePatchConfiguration.syncToken,
-                    "installationFingerprint": IOSKeySession.installationFingerprint
-                ]
-            ]
-            let payloadData = try JSONSerialization.data(withJSONObject: payload)
-            let networkConfiguration = URLSessionConfiguration.default
+		remoteSyncState = .syncing
+		do {
+			guard let feedURL = URL(string: "api/trpc/patches.feed", relativeTo: RemotePatchConfiguration.baseURL)?.absoluteURL else {
+				throw URLError(.badURL)
+			}
+			let payload: [String: Any] = [
+				"json": [
+					// The Worker requires these tRPC fields but does not treat them as credentials.
+					"syncToken": "r2-read-only",
+					"installationFingerprint": "ios-client"
+				]
+			]
+			let payloadData = try JSONSerialization.data(withJSONObject: payload)
+			guard var feedComponents = URLComponents(url: feedURL, resolvingAgainstBaseURL: false),
+				  let input = String(data: payloadData, encoding: .utf8) else {
+				throw URLError(.badURL)
+			}
+			feedComponents.queryItems = [URLQueryItem(name: "input", value: input)]
+			guard let requestURL = feedComponents.url else { throw URLError(.badURL) }
+			let networkConfiguration = URLSessionConfiguration.default
             networkConfiguration.waitsForConnectivity = true
             networkConfiguration.timeoutIntervalForRequest = 45
             networkConfiguration.timeoutIntervalForResource = 120
             networkConfiguration.requestCachePolicy = .reloadIgnoringLocalCacheData
             let networkSession = URLSession(configuration: networkConfiguration)
-            var feedRequest = URLRequest(url: feedURL)
-            feedRequest.httpMethod = "POST"
-            feedRequest.httpBody = payloadData
-            feedRequest.timeoutInterval = 30
-            feedRequest.cachePolicy = .reloadIgnoringLocalCacheData
-            feedRequest.setValue("application/json", forHTTPHeaderField: "Accept")
-            feedRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            feedRequest.setValue("3105-iOS", forHTTPHeaderField: "User-Agent")
+			var feedRequest = URLRequest(url: requestURL)
+			feedRequest.httpMethod = "GET"
+			feedRequest.timeoutInterval = 30
+			feedRequest.cachePolicy = .reloadIgnoringLocalCacheData
+			feedRequest.setValue("application/json", forHTTPHeaderField: "Accept")
+			feedRequest.setValue("3105-iOS", forHTTPHeaderField: "User-Agent")
             let (data, response) = try await Self.fetchWithRetry(
                 feedRequest,
                 session: networkSession
@@ -210,12 +208,11 @@ final class PatchProjectStore: ObservableObject {
             guard (200..<300).contains(response.statusCode) else {
                 let body = String(data: data.prefix(512), encoding: .utf8) ?? "empty response"
                 throw NSError(domain: "RemotePatchFeed", code: response.statusCode, userInfo: [NSLocalizedDescriptionKey: "HTTP \(response.statusCode): \(body)"])
-            }
-            let envelope = try JSONDecoder().decode(RemoteFeedEnvelope.self, from: data)
-            let feed = envelope.result.data.json
-            await sendRemoteHeartbeat()
+			}
+			let envelope = try JSONDecoder().decode(RemoteFeedEnvelope.self, from: data)
+			let feed = envelope.result.data.json
 
-            let allLocalItems = await Task.detached(priority: .utility) {
+			let allLocalItems = await Task.detached(priority: .utility) {
                 PatchProjectLibrary.load(includeWithdrawn: true)
             }.value
             var reservedPackageIDs = Set(allLocalItems.map(\.id))
@@ -412,25 +409,7 @@ final class PatchProjectStore: ObservableObject {
         throw lastError ?? URLError(.unknown)
     }
 
-    private func sendRemoteHeartbeat() async {
-        guard IOSKeySession.runtimeAuthorized, !RemotePatchConfiguration.syncToken.isEmpty else { return }
-        guard let url = URL(string: "api/trpc/patches.heartbeat", relativeTo: RemotePatchConfiguration.baseURL)?.absoluteURL else { return }
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        let payload: [String: Any] = ["json": [
-            "syncToken": RemotePatchConfiguration.syncToken,
-            "installationFingerprint": IOSKeySession.installationFingerprint,
-            "model": UIDevice.current.model,
-            "osVersion": UIDevice.current.systemVersion,
-            "appVersion": Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "unknown",
-        ]]
-        request.httpBody = try? JSONSerialization.data(withJSONObject: payload)
-        let ephemeralSession = URLSession(configuration: .ephemeral)
-        _ = try? await ephemeralSession.data(for: request)
-    }
-
-    private nonisolated static func sha256Hex(_ data: Data) -> String {
+	private nonisolated static func sha256Hex(_ data: Data) -> String {
         SHA256.hash(data: data)
             .map { String(format: "%02x", $0) }
             .joined()
