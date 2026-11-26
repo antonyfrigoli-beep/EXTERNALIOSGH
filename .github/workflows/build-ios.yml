@@ -59,8 +59,9 @@ jobs:
             -target worse_query \
             -configuration Release \
             -sdk iphoneos \
-            -derivedDataPath "$RUNNER_TEMP/DerivedData" \
             -xcconfig "$RUNNER_TEMP/patch-sync-token.xcconfig" \
+            SYMROOT="$RUNNER_TEMP/DerivedData/Build/Products" \
+            OBJROOT="$RUNNER_TEMP/DerivedData/Build/Intermediates.noindex" \
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO \
             build | tee "$RUNNER_TEMP/xcodebuild.log"
