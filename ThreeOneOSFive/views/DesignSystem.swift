@@ -256,7 +256,7 @@ struct ParallaxBrandHeader: View {
                 AppLogo(size: 28)
                     .offset(x: sin(phase * 0.8) * 1.6, y: cos(phase * 0.7) * 0.8)
                 VStack(alignment: .leading, spacing: 1) {
-                    Text("EXTERNAL X")
+                    Text("EXTERNAL GH777")
                         .font(.subheadline.weight(.black))
                         .tracking(0.8)
                         .offset(x: cos(phase * 0.55) * 0.8)
@@ -277,7 +277,7 @@ struct ParallaxBrandHeader: View {
         }
         .frame(height: 42)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("External X")
+        .accessibilityLabel("EXTERNAL GH777")
     }
 }
 

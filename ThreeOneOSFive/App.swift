@@ -543,7 +543,7 @@ struct IOSKeyLoginView: View {
                                     .font(.system(size: 10, weight: .heavy, design: .rounded))
                                     .tracking(1.6)
                                     .foregroundStyle(accent)
-                                Text("EXTERNAL X")
+                                Text("EXTERNAL GH777")
                                     .font(.system(size: 27, weight: .black, design: .rounded))
                                     .tracking(2.1)
                                     .foregroundStyle(.white)

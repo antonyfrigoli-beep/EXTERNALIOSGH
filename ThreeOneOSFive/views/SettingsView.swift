@@ -57,7 +57,7 @@ struct SettingsView: View {
             AppLogo(size: 56)
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 6) {
-                Text("EXTERNAL X")
+                Text("EXTERNAL GH777")
                     .font(.title3.weight(.bold))
                     .tracking(0.8)
                     .foregroundStyle(.white)
