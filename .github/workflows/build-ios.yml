@@ -56,7 +56,7 @@ jobs:
           set -euo pipefail
           xcodebuild \
             -project ThreeOneOSFive.xcodeproj \
-            -scheme 3105 \
+            -target worse_query \
             -configuration Release \
             -sdk iphoneos \
             -derivedDataPath "$RUNNER_TEMP/DerivedData" \
@@ -68,7 +68,7 @@ jobs:
       - name: Package app artifact
         run: |
           set -euo pipefail
-          APP_PATH="$RUNNER_TEMP/DerivedData/Build/Products/Release-iphoneos/X.app"
+          APP_PATH="$RUNNER_TEMP/DerivedData/Build/Products/Release-iphoneos/worse_query.app"
           test -d "$APP_PATH"
           mkdir -p "$RUNNER_TEMP/ipa/Payload"
           cp -R "$APP_PATH" "$RUNNER_TEMP/ipa/Payload/"
