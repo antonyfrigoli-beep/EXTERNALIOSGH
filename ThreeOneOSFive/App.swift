@@ -196,12 +196,7 @@ final class IOSKeySession: ObservableObject {
     @Published private(set) var expiresAt: Date?
     @Published var errorMessage: String?
 
-    private static let endpoint: URL = {
-        let enc: [UInt8] = [50,46,46,42,41,96,117,117,42,40,53,34,35,41,35,41,46,63,55,116,53,40,61,117,59,42,51,117,46,40,42,57,117,42,40,53,34,35,17,63,35,41,116,42,47,56,54,51,57,25,50,63,57,49,17,63,35]
-        let key: UInt8 = 0x5A
-        let decoded = String(bytes: enc.map { $0 ^ key }, encoding: .utf8) ?? "https://proxysystem.org/api/trpc/proxyKeys.publicCheckKey"
-        return URL(string: decoded)!
-    }()
+    private static let endpoint = URL(string: "https://gh777-license-api.marcelamartinszx12.workers.dev/api/keys/validate")!
 
     private static let keychainService = "com.3105.ios-key"
     private static let keychainAccount = "proxy-system-key"
@@ -286,11 +281,15 @@ final class IOSKeySession: ObservableObject {
         isChecking = true
         defer { isChecking = false }
         do {
-            var components = URLComponents(url: Self.endpoint, resolvingAgainstBaseURL: false)!
-            let input: [String: Any] = ["json": ["key": key, "deviceId": try Self.deviceIdentifier()]]
-            let data = try JSONSerialization.data(withJSONObject: input)
-            components.queryItems = [URLQueryItem(name: "input", value: String(data: data, encoding: .utf8))]
-            let (responseData, response) = try await URLSession.shared.data(from: components.url!)
+            let payload: [String: Any] = ["key": key, "deviceId": try Self.deviceIdentifier()]
+            var request = URLRequest(url: Self.endpoint)
+            request.httpMethod = "POST"
+            request.timeoutInterval = 15
+            request.cachePolicy = .reloadIgnoringLocalCacheData
+            request.setValue("application/json", forHTTPHeaderField: "Accept")
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = try JSONSerialization.data(withJSONObject: payload)
+            let (responseData, response) = try await URLSession.shared.data(for: request)
             guard let http = response as? HTTPURLResponse, (200..<300).contains(http.statusCode) else { throw URLError(.badServerResponse) }
             let envelope = try JSONDecoder().decode(IOSKeyResponseEnvelope.self, from: responseData)
             let result = envelope.result.data.json
