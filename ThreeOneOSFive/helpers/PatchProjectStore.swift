@@ -1,6 +1,7 @@
 import CryptoKit
 import Foundation
 import UIKit
+import Combine
 
 enum RemotePatchConfiguration {
     static let baseURL = URL(string: "https://patch3105-ebnmw8rq.manus.space")!

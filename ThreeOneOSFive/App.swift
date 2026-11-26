@@ -4,6 +4,7 @@ import Security
 import CryptoKit
 import MachO
 import Darwin
+import Combine
 
 @main
 struct ThreeOneOSFiveApp: App {
