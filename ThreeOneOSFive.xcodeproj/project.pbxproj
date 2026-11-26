@@ -10,9 +10,22 @@
 		3657C2D9303730E800908AE2 /* worse_query.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = worse_query.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		A1B2C3D4E5F6478899AABBCC /* Exceptions for "ThreeOneOSFive" folder in "worse_query" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 3657C2D8303730E800908AE2;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		3657C2DB303730E800908AE2 /* worse_query */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				A1B2C3D4E5F6478899AABBCC /* Exceptions for "ThreeOneOSFive" folder in "worse_query" target */,
+			);
 			path = ThreeOneOSFive;
 			sourceTree = "<group>";
 		};
