@@ -4,6 +4,7 @@ enum ExploitSupportPolicy {
     static let verifiedIOS17Range = "17.0–17.7.x"
     static let verifiedIOS18Range = "18.0–18.7.1"
     static let verifiedIOS26Range = "26.0–26.6.1"
+    static let declaredIOS27CompatibilityVersions = ["27.0", "27.2.1", "27.3"]
 
     static let verifiedIOS27Builds: [(beta: Int, publicBeta: Int?, build: String)] = [
         (1, nil, "24A5355q"),

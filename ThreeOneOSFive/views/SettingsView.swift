@@ -247,7 +247,7 @@ struct SettingsView: View {
         VStack(alignment: .leading, spacing: 14) {
             HStack(spacing: 11) {
                 settingsIcon("checkmark.seal.fill")
-                Text(language.text("settings.verified_versions"))
+                Text(language.text("settings.compatibility"))
                     .font(.headline)
                     .foregroundStyle(.white)
             }
@@ -261,6 +261,9 @@ struct SettingsView: View {
             versionLine("iOS 17", ExploitSupportPolicy.verifiedIOS17Range)
             versionLine("iOS 18", ExploitSupportPolicy.verifiedIOS18Range)
             versionLine("iOS 26", ExploitSupportPolicy.verifiedIOS26Range)
+            ForEach(ExploitSupportPolicy.declaredIOS27CompatibilityVersions, id: \.self) { version in
+                versionLine("iOS \(version)", language.text("settings.supported"))
+            }
             ForEach(ExploitSupportPolicy.verifiedIOS27Builds, id: \.build) { version in
                 versionLine("iOS 27", versionLabel(version))
             }

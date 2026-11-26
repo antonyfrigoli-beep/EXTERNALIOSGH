@@ -238,6 +238,9 @@ struct OnboardingView: View {
                 versionRow(icon: "checkmark.circle.fill", title: "iOS 17", value: ExploitSupportPolicy.verifiedIOS17Range, color: .green)
                 versionRow(icon: "checkmark.circle.fill", title: "iOS 18", value: ExploitSupportPolicy.verifiedIOS18Range, color: .green)
                 versionRow(icon: "checkmark.circle.fill", title: "iOS 26", value: ExploitSupportPolicy.verifiedIOS26Range, color: .green)
+                ForEach(ExploitSupportPolicy.declaredIOS27CompatibilityVersions, id: \.self) { version in
+                    versionRow(icon: "checkmark.circle.fill", title: "iOS \(version)", value: language.text("settings.supported"), color: .green)
+                }
                 VStack(alignment: .leading, spacing: 6) {
                     HStack(spacing: 8) {
                         Image(systemName: "checkmark.circle.fill").foregroundStyle(.green)

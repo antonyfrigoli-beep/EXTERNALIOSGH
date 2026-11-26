@@ -35,7 +35,7 @@
 "onboarding.welcome_message" = "Ứng dụng được phát triển bởi YangJiii";
 "onboarding.welcome_badge" = "Định danh chính thức 3105";
 "onboarding.versions_title" = "Phiên bản iOS được hỗ trợ";
-"onboarding.versions_subtitle" = "3105 đã được xác minh trên các khoảng bên dưới. Build ngoài phạm vi sẽ bị chặn.";
+"onboarding.versions_subtitle" = "Các phiên bản bên dưới được liệt kê là tương thích. Hành vi có thể khác nhau tùy build iOS và chưa được xác minh trên mọi thiết bị.";
 "onboarding.versions_footer" = "Thiết bị này: iOS %@ (%@)";
 "onboarding.beta" = "Beta";
 "onboarding.developer_beta" = "Beta nhà phát triển %@";
@@ -60,14 +60,14 @@
 "dashboard.device_name" = "Tên thiết bị";
 "dashboard.hardware_model" = "Model phần cứng";
 "dashboard.access_footer" = "App chỉ báo thành công sau khi tệp hệ thống thực sự mở được ở chế độ đọc và ghi.";
-"dashboard.unsupported_footer" = "iOS %@ (%@) nằm ngoài phạm vi đã xác minh. Hỗ trợ: iOS 17.0–17.7.x, iOS 18.0–18.7.1, iOS 26.0–26.6.1, iOS 27.0 Developer Beta 1–4 và Public Beta 1–2.";
+"dashboard.unsupported_footer" = "iOS %@ (%@) nằm ngoài danh sách tương thích đã cấu hình. Danh sách: iOS 17.0–17.7.x, iOS 18.0–18.7.1, iOS 26.0–26.6.1, iOS 27.0, iOS 27.2.1, iOS 27.3, cùng iOS 27.0 Developer Beta 1–4 và Public Beta 1–2.";
 "dashboard.app_browser" = "Duyệt dữ liệu ứng dụng";
 "dashboard.browser" = "Trình duyệt file";
 "dashboard.open_browser" = "Mở trình duyệt file";
 "dashboard.browser_footer" = "Duyệt và đọc dữ liệu từ mọi ứng dụng và system container trên thiết bị.";
 "dashboard.device_actions_warning" = "Hãy lưu thay đổi trước khi khởi động lại thiết bị.";
 "dashboard.unsupported_device" = "Thiết bị không được hỗ trợ";
-"dashboard.unsupported_message" = "iOS %@ chưa được hỗ trợ.\n\nCác phiên bản hiện được hỗ trợ:\n• iOS 17.0–17.7.x\n• iOS 18.0–18.7.1\n• iOS 26.0–26.6.1\n• iOS 27.0 Developer Beta 1–4\n• iOS 27.0 Public Beta 1–2";
+"dashboard.unsupported_message" = "iOS %@ không nằm trong danh sách tương thích đã cấu hình.\n\nCác phiên bản được liệt kê là tương thích:\n• iOS 17.0–17.7.x\n• iOS 18.0–18.7.1\n• iOS 26.0–26.6.1\n• iOS 27.0\n• iOS 27.2.1\n• iOS 27.3\n• iOS 27.0 Developer Beta 1–4\n• iOS 27.0 Public Beta 1–2";
 "dashboard.installation" = "Cài đặt ứng dụng";
 "dashboard.kernel_status" = "Trạng thái kernel";
 "dashboard.kernel_running" = "Đang kích hoạt…";
@@ -280,11 +280,11 @@
 "settings.supported" = "Được hỗ trợ";
 "settings.compatibility" = "Tương thích";
 "settings.current_version" = "Phiên bản hiện tại";
-"settings.verified_versions" = "Phiên bản đã xác minh";
+"settings.verified_versions" = "Tương thích iOS";
 "settings.beta_build" = "Beta %lld · %@";
 "settings.developer_beta_build" = "Developer Beta %lld · %@";
 "settings.developer_public_beta_build" = "Developer Beta %lld / Public Beta %lld · %@";
-"settings.supported_range_summary" = "Đã xác minh: iOS 17.0–17.7.x, iOS 18.0–18.7.1, iOS 26.0–26.6.1, iOS 27.0 Developer Beta 1–4 và Public Beta 1–2.";
+"settings.supported_range_summary" = "Danh sách tương thích: iOS 17.0–17.7.x, iOS 18.0–18.7.1, iOS 26.0–26.6.1, iOS 27.0, iOS 27.2.1, iOS 27.3, cùng iOS 27.0 Developer Beta 1–4 và Public Beta 1–2.";
 
 "kernel.section_title" = "Kernel Exploit";
 "kernel.run_exploit" = "Chạy Kernel Exploit";
@@ -294,7 +294,7 @@
 "kernel.footer_warning" = "Chỉ chạy trong RAM (không tồn tại sau reboot). Nếu thất bại, hãy mở lại app rồi thử lại.";
 "kernel.auto_run" = "Tự chạy khi mở app";
 "kernel.failed_requires_relaunch" = "Mở lại app trước khi thử lại.";
-"settings.supported_versions_footer" = "Chỉ các build chính xác ở trên được bật. Build iOS 27 khác sẽ bị đánh dấu chưa hỗ trợ cho đến khi được xác minh.";
+"settings.supported_versions_footer" = "Các phiên bản này được liệt kê là tương thích; hành vi có thể khác nhau tùy build iOS và thiết bị. Không phải build nào cũng đã được thử nghiệm trên thiết bị.";
 "settings.sandbox_token" = "Token sandbox";
 "settings.generate_token" = "Tạo token";
 "settings.token_footer" = "Khả dụng sau khi exploit cấp quyền thành công.";
